@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>MARKET ΠΑΠΙΛΙΑΣ - Λαμπέτι, Ηλεία | Παραγγελίες online</title>
+    <meta name="description" content="Online παραγγελίες για το Market Παπίλιας στο Λαμπέτι Πύργου. Πατήστε το μικρόφωνο για να συνδεθείτε με το WhatsApp μας.">
+    <meta name="keywords" content="Market Παπίλιας, Λαμπέτι, Πύργος, Ηλεία, παντοπωλείο, online παραγγελίες, WhatsApp">
+    
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center; background-color: #f0f2f5; padding: 20px; color: #333; }
+        .card { background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); display: inline-block; max-width: 90%; margin-top: 50px; }
+        h1 { color: #1a1a1a; margin-bottom: 5px; }
+        h2 { color: #555; font-weight: normal; margin-top: 0; font-size: 1.1em; }
+        .mic-button { background-color: #e63946; color: white; border: none; padding: 25px; border-radius: 50%; font-size: 50px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 6px 20px rgba(230, 57, 70, 0.4); margin-top: 20px; }
+        .mic-button:hover { background-color: #d62839; transform: translateY(-3px); }
+        .mic-button:active { transform: scale(0.95); }
+        p.instruction { color: #666; font-size: 1.2em; margin-top: 30px; }
+        .lab-footer { margin-top: 50px; font-size: 0.9em; color: #888; border-top: 1px solid #ddd; padding-top: 15px; }
+        .lab-footer a { color: #007bff; text-decoration: none; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>MARKET ΠΑΠΙΛΙΑΣ</h1>
+        <h2>Λαμπέτι, Πύργος</h2>
+        
+        <p class="instruction">Πατήστε το μικρόφωνο για παραγγελία</p>
+        <button class="mic-button" onclick="startOrder()" aria-label="Έναρξη παραγγελίας">🎤</button>
+        
+        <p class="lab-footer">Ένα ψηφιακό εργαλείο του <a href="https://labeti.gr">labeti.gr</a></p>
+    </div>
+
+    <script>
+        function startOrder() {
+            const phone = "306945381831"; // Κινητό Παναγιώτη
+            const message = encodeURIComponent("Γεια σας! Θέλω να κάνω μια παραγγελία από το MARKET ΠΑΠΙΛΙΑΣ.");
+            // Σύνδεσμος WhatsApp (για κινητά & web)
+            window.location.href = `https://wa.me/${phone}?text=${message}`;
+        }
+    </script>
+</body>
+</html>
