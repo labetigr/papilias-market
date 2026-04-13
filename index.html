@@ -1,1 +1,88 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MARKET ΠΑΠΙΛΙΑΣ</title>
+    <style>
+        :root { --red: #e63946; --green: #2a9d8f; --gold: #ffb703; --navy: #1d3557; }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; background-color: #f8f9fa; margin: 0; display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+        .card { background: white; width: 90%; max-width: 400px; padding: 40px 20px; border-radius: 30px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); text-align: center; }
+        .badge { display: inline-block; padding: 10px 25px; border-radius: 50px; font-weight: bold; margin-bottom: 20px; text-transform: uppercase; font-size: 0.85em; letter-spacing: 1px; }
+        .open { background: #e9f5f2; color: var(--green); border: 1px solid var(--green); }
+        .closed { background: #fdeaea; color: var(--red); border: 1px solid var(--red); }
+        h1 { color: var(--navy); margin: 10px 0; font-size: 1.8em; }
+        .promo-container { background: #fffcf2; border: 2px dashed var(--gold); border-radius: 15px; padding: 25px 15px; margin: 25px 0; position: relative; }
+        .promo-label { position: absolute; top: -12px; left: 20px; background: var(--gold); color: white; padding: 2px 12px; border-radius: 5px; font-size: 0.75em; font-weight: bold; }
+        #promo-text { color: #444; font-weight: 500; font-size: 1.1em; line-height: 1.4; }
+        .mic-btn { background: var(--red); color: white; border: none; width: 110px; height: 110px; border-radius: 50%; font-size: 55px; cursor: pointer; box-shadow: 0 10px 25px rgba(230,57,70,0.3); transition: transform 0.2s; }
+        .mic-btn:active { transform: scale(0.95); }
+        .mic-btn:disabled { background: #ccc; box-shadow: none; opacity: 0.6; cursor: not-allowed; }
+        .footer { margin-top: 40px; font-size: 0.75em; color: #adb5bd; font-weight: bold; }
+        .footer a { color: #457b9d; text-decoration: none; }
+    </style>
+</head>
+<body>
 
+<div class="card">
+    <div id="badge" class="badge open">ΣΥΝΔΕΣΗ...</div>
+    <h1>MARKET ΠΑΠΙΛΙΑΣ</h1>
+    
+    <div class="promo-container">
+        <span class="promo-label">ΠΡΟΣΦΟΡΑ</span>
+        <div id="promo-text">Ενημέρωση δεδομένων...</div>
+    </div>
+
+    <button id="btn" class="mic-btn" onclick="makeOrder()">🎤</button>
+    <p id="hint" style="margin-top:20px; font-weight:bold; color: var(--navy);">Πατήστε για παραγγελία</p>
+
+    <div class="footer">
+        ΨΗΦΙΑΚΟΣ ΠΛΟΗΓΟΣ: <a href="https://labeti.gr">LABETI.GR</a>
+    </div>
+</div>
+
+<script>
+    const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTJsjXjceO8jeeNU7KVyHWwr_koZlPhgLfZ61mh1TmAFfNzzr5z5PmfK5nfe2_BBR9Zj_SQGJT4CZJ/pub?output=csv";
+
+    async function sync() {
+        try {
+            const r = await fetch(SHEET_URL + "&cache=" + Date.now());
+            const t = await r.text();
+            
+            const lines = t.split(/\r?\n/);
+            const row1 = lines[0].split(',');
+            const row2 = lines[1].split(',');
+
+            const statusVal = row1[1] ? row1[1].replace(/['"]+/g, '').trim() : "";
+            const promoVal = row2[1] ? row2[1].replace(/['"]+/g, '').trim() : "Δεν υπάρχουν νέες προσφορές.";
+
+            document.getElementById('promo-text').innerText = promoVal;
+            const b = document.getElementById('badge');
+            const btn = document.getElementById('btn');
+            const hint = document.getElementById('hint');
+
+            if (statusVal.toUpperCase().includes("ΑΝΟΙΧΤΟ")) {
+                b.innerText = "● ΚΑΤΑΣΤΗΜΑ ΑΝΟΙΧΤΟ";
+                b.className = "badge open";
+                btn.disabled = false;
+                hint.innerText = "Πατήστε για παραγγελία";
+            } else {
+                b.innerText = "○ ΚΑΤΑΣΤΗΜΑ ΚΛΕΙΣΤΟ";
+                b.className = "badge closed";
+                btn.disabled = true;
+                hint.innerText = "Είμαστε κλειστά";
+            }
+        } catch (e) { console.error("Sync Error"); }
+    }
+
+    function makeOrder() {
+        // Ο ορθός αριθμός 6972101928 με κωδικό Ελλάδας 30
+        window.location.href = "https://wa.me/306972101928?text=" + encodeURIComponent("Γεια σας, θα ήθελα να κάνω μια παραγγελία:");
+    }
+
+    sync();
+    setInterval(sync, 15000);
+</script>
+
+</body>
+</html>
