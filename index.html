@@ -1,1 +1,69 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MARKET ΠΑΠΙΛΙΑΣ</title>
+    <style>
+        :root { --red: #e63946; --green: #2a9d8f; --navy: #1d3557; --gold: #ffb703; }
+        body { font-family: sans-serif; background: #f8f9fa; margin: 0; display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+        .card { background: white; width: 90%; max-width: 400px; padding: 40px 20px; border-radius: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; }
+        .badge { display: inline-block; padding: 10px 20px; border-radius: 50px; font-weight: bold; margin-bottom: 20px; }
+        .open { background: #e9f5f2; color: var(--green); border: 1px solid var(--green); }
+        .closed { background: #fdeaea; color: var(--red); border: 1px solid var(--red); }
+        .promo-box { background: #fffcf2; border: 2px dashed var(--gold); border-radius: 15px; padding: 20px; margin: 20px 0; color: #856404; font-weight: bold; }
+        .mic-btn { background: var(--red); color: white; border: none; width: 100px; height: 100px; border-radius: 50%; font-size: 50px; cursor: pointer; display: flex; align-items: center; justify-content: center; margin: 0 auto; }
+        .mic-btn:disabled { background: #ccc; opacity: 0.5; cursor: not-allowed; }
+        .footer { margin-top: 30px; font-size: 0.8em; color: #adb5bd; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div id="st" class="badge">ΣΥΝΔΕΣΗ...</div>
+        <h1 style="color: var(--navy);">MARKET ΠΑΠΙΛΙΑΣ</h1>
+        <div class="promo-box" id="pr">Φορτώνει...</div>
+        <button id="bt" class="mic-btn" onclick="location.href='https://wa.me/306972101928'">🎤</button>
+        <p id="ht" style="font-weight:bold; color: var(--navy); margin-top:15px;">Πατήστε για παραγγελία</p>
+        <div class="footer">ΨΗΦΙΑΚΟΣ ΠΛΟΗΓΟΣ: <a href="https://labeti.gr" style="color:#457b9d; text-decoration:none;">labeti.gr</a></div>
+    </div>
 
+    <script>
+        // ΤΟ ΣΩΣΤΟ LINK ΠΟΥ ΔΟΥΛΕΥΕΙ
+        const U = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTJsjXjceO8jeeNU7KVyHWwr_koZlPhgLfZ61mh1TmAFfNzzr5z5PmfK5nfe2_BBR9Zj_SQGJT4CZJ/pub?output=csv";
+        
+        async function sync() {
+            try {
+                const r = await fetch(U + "&v=" + Date.now());
+                if (!r.ok) throw new Error("Network Error");
+                const t = await r.text();
+                const lines = t.split(/\r?\n/);
+                
+                const statusText = lines[0] ? lines[0].toUpperCase() : "";
+                const promoText = lines[1] ? lines[1].split(',')[1].replace(/['"]+/g, '').trim() : "---";
+
+                document.getElementById('pr').innerText = promoText;
+                const b = document.getElementById('st');
+                const btn = document.getElementById('bt');
+                const h = document.getElementById('ht');
+
+                if (statusText.includes("ΑΝΟΙΧΤΟ") || statusText.includes("ΑΝΟΙΚΤΟ")) {
+                    b.innerText = "● ΚΑΤΑΣΤΗΜΑ ΑΝΟΙΧΤΟ";
+                    b.className = "badge open";
+                    btn.disabled = false;
+                    h.innerText = "Πατήστε για παραγγελία";
+                } else {
+                    b.innerText = "○ ΚΑΤΑΣΤΗΜΑ ΚΛΕΙΣΤΟ";
+                    b.className = "badge closed";
+                    btn.disabled = true;
+                    h.innerText = "Είμαστε κλειστά";
+                }
+            } catch (e) { 
+                document.getElementById('st').innerText = "ΣΦΑΛΜΑ ΔΙΚΤΥΟΥ";
+                console.error(e);
+            }
+        }
+        sync();
+        setInterval(sync, 10000);
+    </script>
+</body>
+</html>
