@@ -1,1 +1,70 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MARKET ΠΑΠΙΛΙΑΣ</title>
+    <style>
+        :root { --red: #e63946; --green: #2a9d8f; --gold: #ffb703; }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; background-color: #f8f9fa; margin: 0; display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+        .card { background: white; width: 90%; max-width: 400px; padding: 40px 20px; border-radius: 30px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); text-align: center; }
+        .badge { display: inline-block; padding: 10px 25px; border-radius: 50px; font-weight: bold; margin-bottom: 20px; }
+        .open { background: #e9f5f2; color: var(--green); border: 1px solid var(--green); }
+        .closed { background: #fdeaea; color: var(--red); border: 1px solid var(--red); }
+        .promo-container { background: #fffcf2; border: 2px dashed var(--gold); border-radius: 15px; padding: 20px; margin: 25px 0; position: relative; }
+        .promo-label { position: absolute; top: -12px; left: 20px; background: var(--gold); color: white; padding: 2px 10px; border-radius: 5px; font-size: 0.8em; font-weight: bold; }
+        .mic-btn { background: var(--red); color: white; border: none; width: 100px; height: 100px; border-radius: 50%; font-size: 50px; cursor: pointer; box-shadow: 0 10px 20px rgba(230,57,70,0.3); }
+        .mic-btn:disabled { background: #ccc; box-shadow: none; }
+    </style>
+</head>
+<body>
 
+<div class="card">
+    <div id="badge" class="badge open">ΣΥΝΔΕΣΗ...</div>
+    <h1>MARKET ΠΑΠΙΛΙΑΣ</h1>
+    <div class="promo-container">
+        <span class="promo-label">ΠΡΟΣΦΟΡΑ</span>
+        <div id="promo-text">Ενημέρωση...</div>
+    </div>
+    <button id="btn" class="mic-btn" onclick="location.href='https://wa.me/306945381831'">🎤</button>
+    <p id="hint" style="margin-top:15px; font-weight:bold;">Πατήστε για παραγγελία</p>
+    <div style="margin-top:40px; font-size:0.7em; color:#adb5bd;">ΨΗΦΙΑΚΟΣ ΠΛΟΗΓΟΣ: LABETI.GR</div>
+</div>
+
+<script>
+    const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTJsjXjceO8jeeNU7KVyHWwr_koZlPhgLfZ61mh1TmAFfNzzr5z5PmfK5nfe2_BBR9Zj_SQGJT4CZJ/pub?output=csv";
+
+    async function sync() {
+        try {
+            const r = await fetch(SHEET_URL + "&cache=" + Date.now());
+            const t = await r.text();
+            // Χωρίζουμε με κόμμα γιατί το link είναι πλέον CSV
+            const rows = t.split('\n').map(row => row.split(','));
+            
+            const status = rows[0][1].replace(/"/g, "").trim(); // Παίρνει το B1
+            const promo = rows[1][1].replace(/"/g, "").trim();  // Παίρνει το B2
+
+            document.getElementById('promo-text').innerText = promo;
+
+            const b = document.getElementById('badge');
+            const btn = document.getElementById('btn');
+            const hint = document.getElementById('hint');
+
+            if (status.includes("ΑΝΟΙΧΤΟ")) {
+                b.innerText = "● ΑΝΟΙΧΤΟ";
+                b.className = "badge open";
+                btn.disabled = false;
+                hint.innerText = "Πατήστε για παραγγελία";
+            } else {
+                b.innerText = "○ ΚΛΕΙΣΤΟ";
+                b.className = "badge closed";
+                btn.disabled = true;
+                hint.innerText = "Είμαστε κλειστά";
+            }
+        } catch (e) { console.error("Sync error"); }
+    }
+    sync();
+    setInterval(sync, 15000);
+</script>
+</body>
+</html>
