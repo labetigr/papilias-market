@@ -1,1 +1,66 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <title>MARKET ΠΑΠΙΛΙΑΣ - Παραγγελία Delivery</title>
+    <meta name="description" content="Market Παπίλιας: Παραγγελίες Delivery μέσω WhatsApp και Viber. Δωρεάν διανομή εντός ωραρίου.">
+    <meta name="keywords" content="Market Παπίλιας, Market Papilias, Delivery, WhatsApp παραγγελία, Viber παραγγελία, Παντοπωλείο, Ψιλικά">
 
+    <style>
+        :root { --whatsapp: #25D366; --viber: #7360f2; --navy: #1d3557; --gold: #ffb703; }
+        body { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: #f0f2f5; margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; -webkit-tap-highlight-color: transparent; }
+        .card { background: #ffffff; width: 340px; padding: 40px 20px; border-radius: 40px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); text-align: center; border-top: 12px solid var(--gold); }
+        h1 { color: var(--navy); margin: 0; font-size: 26px; letter-spacing: -1px; }
+        .sub-title { color: #adb5bd; text-transform: uppercase; font-size: 11px; letter-spacing: 2px; margin-top: 5px; margin-bottom: 25px; }
+        .info-box { background: #fff9e6; border-radius: 20px; padding: 15px; margin-bottom: 25px; border: 1px solid #ffeeba; color: #856404; font-weight: bold; font-size: 16px; }
+        
+        .btn-container { display: flex; justify-content: space-around; margin: 25px 0; }
+        .btn-wrapper { display: flex; flex-direction: column; align-items: center; gap: 10px; text-decoration: none; }
+        
+        .btn { border: none; width: 100px; height: 100px; border-radius: 50%; font-size: 50px; cursor: pointer; color: white; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 20px rgba(0,0,0,0.1); transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .btn:active { transform: scale(0.85); }
+        .btn-wa { background: var(--whatsapp); }
+        .btn-vi { background: var(--viber); }
+        
+        .label { font-size: 11px; font-weight: 900; color: var(--navy); }
+        
+        .voice-instruction { background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 20px; padding: 18px; margin-top: 20px; color: var(--navy); font-size: 14px; line-height: 1.5; }
+        .voice-instruction strong { color: #e63946; font-size: 15px; }
+
+        .footer { margin-top: 45px; font-size: 13px; color: #ced4da; border-top: 1px solid #f8f9fa; padding-top: 20px; }
+        .footer a { color: #457b9d; text-decoration: none; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>MARKET ΠΑΠΙΛΙΑΣ</h1>
+        <div class="sub-title">Premium Delivery</div>
+        
+        <div class="info-box">ΔΩΡΕΑΝ ΔΙΑΝΟΜΗ</div>
+        
+        <div class="btn-container">
+            <a href="https://wa.me/306972101928?text=Γεια σας, θα ήθελα να παραγγείλω" class="btn-wrapper">
+                <div class="btn btn-wa">🎤</div>
+                <span class="label">WHATSAPP</span>
+            </a>
+            <a href="viber://chat?number=%2B306972101928" class="btn-wrapper">
+                <div class="btn btn-vi">📱</div>
+                <span class="label">VIBER</span>
+            </a>
+        </div>
+        
+        <div class="voice-instruction">
+            Στη σελίδα που θα ανοίξει,<br>
+            <strong>πατήστε το μικρόφωνο</strong><br>
+            και αφήστε το μήνυμά σας.
+        </div>
+
+        <div class="footer">
+            ΨΗΦΙΑΚΟΣ ΠΛΟΗΓΟΣ<br>
+            <a href="https://labeti.gr">labeti.gr</a>
+        </div>
+    </div>
+</body>
+</html>
